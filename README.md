@@ -1,4 +1,17 @@
-# Play REST API
+## Play Scala REST API and VueJS Frontend with Docker
+First install Docker from https://www.docker.com/products/docker-desktop
+
+Clone this repo:
+```bash
+git clone https://github.com/robertoporceddu/play-scala-rest-api-and-vuejs-example
+cd play-scala-rest-api-and-vuejs-example
+docker build -t robertoporceddu/play-scala-rest-api-and-vuejs-example .
+docker run -p 80:80 -p 3306:3306 -p 9000:9000 -it robertoporceddu/play-scala-rest-api-and-vuejs-example
+```
+
+After everithing is build, open the browser and go to http://localhost:9000/v1/posts and wait the response, after that go to http://localhost to see the fontend working properly.
+
+## Play REST API
 
 This is the example project for [Making a REST API in Play](http://developer.lightbend.com/guides/play-rest-api/index.html).
 
