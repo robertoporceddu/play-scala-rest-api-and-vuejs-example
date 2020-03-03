@@ -33,12 +33,12 @@ RUN \
 	sbt sbtVersion
 	
 CMD	\
-	service apache2 start && \
 	service mysql start && \
 	mysql -u root -proot -e 'USE mysql; UPDATE user SET Host="%" WHERE User="root" AND Host="localhost"; DELETE FROM user WHERE Host != "%" AND User="root"; FLUSH PRIVILEGES;' && \
 	cd /app/public/hello-world && \	
 	npm run build && \
 	ln -s /app/public/hello-world/dist /var/www/html && \
+	service apache2 start && \
 	cd /app && \
 	sbt run
 
