@@ -20,8 +20,6 @@ RUN \
 
 RUN apt-get install -y curl scala unzip zip apache2 npm nano
 
-RUN rm -R /var/www/html
-
 ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
 
 RUN \
@@ -30,14 +28,20 @@ RUN \
 	rm sbt-1.3.8.deb && \
 	apt-get update && \
 	apt-get install sbt && \
-	sbt sbtVersion
+	sbt sbtVersion && \
+	cd /app && \
+	sbt compile
+
+RUN \
+	rm -R /var/www/html && \
+	cd /app/public/hello-world && \	
+	npm install && \
+	npm run build && \
+	ln -s /app/public/hello-world/dist /var/www/html
 	
 CMD	\
 	service mysql start && \
 	mysql -u root -proot -e 'USE mysql; UPDATE user SET Host="%" WHERE User="root" AND Host="localhost"; DELETE FROM user WHERE Host != "%" AND User="root"; FLUSH PRIVILEGES;' && \
-	cd /app/public/hello-world && \	
-	npm run build && \
-	ln -s /app/public/hello-world/dist /var/www/html && \
 	service apache2 start && \
 	cd /app && \
 	sbt run
