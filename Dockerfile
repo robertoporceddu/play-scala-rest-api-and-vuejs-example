@@ -39,7 +39,7 @@ RUN \
 	npm run build && \
 	ln -s /app/public/hello-world/dist /var/www/html
 	
-CMD	\
+CMD \
 	service mysql start && \
 	mysql -u root -proot -e 'USE mysql; UPDATE user SET Host="%" WHERE User="root" AND Host="localhost"; DELETE FROM user WHERE Host != "%" AND User="root"; FLUSH PRIVILEGES;' && \
 	service apache2 start && \
